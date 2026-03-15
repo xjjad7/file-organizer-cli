@@ -65,7 +65,8 @@ def main():
     parser.add_argument("--config", help="Path to a custom config JSON file")
     parser.add_argument("--recursive", action="store_true", help="Also organize files in subfolders")
     parser.add_argument("--ignore", help="Comma-separated list of folder names to skip (e.g. --ignore work,old)")
-    
+    parser.add_argument("--flat", action="store_true", help="With --recursive, pull all files into root category folders")
+
     args = parser.parse_args()
 
     if args.undo:
@@ -91,7 +92,8 @@ def main():
         categories=categories,
         dry_run=args.dry_run,
         recursive=args.recursive,
-        ignore=ignore_list
+        ignore=ignore_list,
+        flat=args.flat
     )
 
     if not moves:

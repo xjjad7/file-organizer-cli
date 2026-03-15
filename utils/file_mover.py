@@ -28,7 +28,7 @@ def move_file(source, destination_folder, dry_run=False):
         "destination": str(destination)
     }
 
-def organize_files(folder_path, categories, dry_run=False, recursive=False, ignore=None):
+def organize_files(folder_path, categories, dry_run=False, recursive=False, ignore=None, flat=False):
     files = get_all_files(folder_path, recursive)
     moves = []
     ignore = [i.lower() for i in ignore] if ignore else []
@@ -44,7 +44,7 @@ def organize_files(folder_path, categories, dry_run=False, recursive=False, igno
         extension = file.suffix
         category = get_category(extension, categories)
 
-        if recursive and file.parent != Path(folder_path):
+        if recursive and not flat and file.parent != Path(folder_path):
             destination_folder = file.parent / category
         else:
             destination_folder = Path(folder_path) / category
