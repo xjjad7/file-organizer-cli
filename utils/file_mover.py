@@ -28,17 +28,26 @@ def move_file(source, destination_folder, dry_run=False):
         "destination": str(destination)
     }
 
-def organize_files(folder_path, categories, dry_run=False, recursive=False):
+def organize_files(folder_path, categories, dry_run=False, recursive=False, ignore=None):
     files = get_all_files(folder_path, recursive)
     moves = []
+    ignore = [i.lower() for i in ignore] if ignore else []
 
     for file in files:
         if file.name.startswith("."):
             continue
 
+        relative_parts = [p.lower() for p in file.relative_to(folder_path).parts]
+        if any(part in ignore for part in relative_parts):
+            continue
+
         extension = file.suffix
         category = get_category(extension, categories)
-        destination_folder = Path(folder_path) / category
+
+        if recursive and file.parent != Path(folder_path):
+            destination_folder = file.parent / category
+        else:
+            destination_folder = Path(folder_path) / category
 
         move = move_file(file, destination_folder, dry_run)
         moves.append(move)

@@ -32,6 +32,7 @@ Would move 4 file(s)
 - `--verbose` print every file operation to the terminal
 - `--undo` reverse the last organize session
 - `--recursive` organize files inside subfolders too
+- `--ignore` skip specific folders (e.g. `--ignore work,backup`)
 - `--config` use a custom category config file
 
 ---
@@ -56,6 +57,9 @@ python organizer.py ~/Downloads --dry-run --verbose
 
 # To Organize including subfolders
 python organizer.py ~/Downloads --recursive
+
+# Recursive but skips certain folders
+python organizer.py ~/Downloads --recursive --ignore work,backup
 
 # Use a custom config
 python organizer.py ~/Downloads --config my_config.json

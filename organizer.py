@@ -64,7 +64,8 @@ def main():
     parser.add_argument("--undo", action="store_true", help="Undo the last organize session")
     parser.add_argument("--config", help="Path to a custom config JSON file")
     parser.add_argument("--recursive", action="store_true", help="Also organize files in subfolders")
-
+    parser.add_argument("--ignore", help="Comma-separated list of folder names to skip (e.g. --ignore work,old)")
+    
     args = parser.parse_args()
 
     if args.undo:
@@ -83,11 +84,14 @@ def main():
     if args.dry_run:
         console.print("[yellow]DRY RUN MODE - no files will be moved[/yellow]\n")
 
+    ignore_list = [i.strip() for i in args.ignore.split(",")] if args.ignore else []
+
     moves = organize_files(
         folder_path=folder,
         categories=categories,
         dry_run=args.dry_run,
-        recursive=args.recursive
+        recursive=args.recursive,
+        ignore=ignore_list
     )
 
     if not moves:
