@@ -32,6 +32,7 @@ Would move 4 file(s)
 - `--verbose` print every file operation to the terminal
 - `--undo` reverse the last organize session
 - `--recursive` organize files inside subfolders too
+- `--recursive --flat` organize files in root folder from all subfolders too
 - `--ignore` skip specific folders (e.g. `--ignore work,backup`)
 - `--config` use a custom category config file
 
